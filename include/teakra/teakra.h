@@ -20,16 +20,20 @@ struct AHBMCallback {
 
 class Processor;
 
+struct UserConfig {
+    bool use_jit;
+    std::uint8_t* dsp_memory;
+};
+
+static constexpr std::uint32_t DspMemorySize = 0x80000;
+
 class Teakra {
 public:
-    Teakra(bool use_jit = false);
+    Teakra(const UserConfig& config, bool use_jit = false);
     ~Teakra();
 
     Processor& GetProcessor();
     void Reset();
-
-    std::array<std::uint8_t, 0x80000>& GetDspMemory();
-    const std::array<std::uint8_t, 0x80000>& GetDspMemory() const;
 
     // APBP Data
     bool SendDataIsEmpty(std::uint8_t index) const;
